@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOSP CinnamonBun Hub</title>
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Efeito de brilho holográfico animado para os elementos CinnamonBun */
+        .holo-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg, transparent 30%, rgba(61, 220, 132, 0.15) 40%, rgba(147, 51, 234, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            background-position: 200% 0%;
+            transition: background-position 0.6s ease;
+            pointer-events: none;
+        }
+
+        .holo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(61, 220, 132, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+            border-color: rgba(61, 220, 132, 0.4);
+        }
+
+        .holo-card:hover::before {
+            background-position: 0% 100%;
+        }
+
+        /* Linhas conectoras da árvore estilo AOSP */
+        .tree-line {
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .tree-line::before {
+                content: '';
+                position: absolute;
+                top: -24px;
+                left: 50%;
+                width: 1px;
+                height: 24px;
+                background-color: #cbd5e1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#3ddc84] selection:text-[#1e293b]">
+
+    <!-- HEADER / HERO SECTION (AOSP Claro) -->
+    <header class="max-w-5xl mx-auto pt-16 pb-12 px-4 text-center animate-fade-in">
+        <h1 class="text-3xl md:text-5xl font-sans font-normal tracking-tight text-[#0f172a] mb-2">
+            Android Open Source Project
+        </h1>
+        <p class="text-xs font-mono tracking-widest text-gray-400 uppercase mb-6">CinnamonBun Ecosystem</p>
+        
+        <!-- Robô Android Centralizado (Inspirado na imagem 1783089365598.png) -->
+        <div class="inline-flex flex-col items-center justify-center my-4 group">
+            <div class="p-4 bg-white rounded-full shadow-sm border border-gray-100 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
+                <svg class="w-16 h-16 text-[#3ddc84]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a1 1 0 0 1 1 1v1.07A7.002 7.002 0 0 1 19 11v1H5v-1a7.002 7.002 0 0 1 6-6.93V3a1 1 0 0 1 1-1m-4.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M3 13h18a1 1 0 0 1 1 1v4a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-4a1 1 0 0 1 1-1z"/>
+                </svg>
+            </div>
+            <span class="text-xl font-bold font-mono tracking-widest mt-3 lowercase text-[#2cb86a]">android</span>
+        </div>
+
+        <!-- Linha vertical conectora principal -->
+        <div class="w-0.5 h-12 bg-gray-200 mx-auto"></div>
+
+        <!-- LINHA HORIZONTAL CONECTORAL E QUADROS HOLOGRÁFICOS -->
+        <div class="relative max-w-4xl mx-auto px-4">
+            <!-- Linha horizontal que une os blocos no PC -->
+            <div class="absolute top-0 left-[12.5%] right-[12.5%] h-0.5 bg-gray-200 hidden md:block"></div>
+            
+            <!-- Grid de Quadros (Os 4 pilares modificados) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 pt-6">
+                
+                <!-- Quadro 1: Ports -->
+                <div class="tree-line flex flex-col items-center">
+                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
+                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
+                        <h3 class="text-base font-bold text-[#0f172a]">Ports</h3>
+                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
+                    </div>
+                </div>
+
+                <!-- Quadro 2: Mods Open Source -->
+                <div class="tree-line flex flex-col items-center">
+                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
+                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
+                        <h3 class="text-sm font-bold text-[#0f172a] leading-tight py-0.5">Mods Open Source</h3>
+                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
+                    </div>
+                </div>
+
+                <!-- Quadro 3: Apks -->
+                <div class="tree-line flex flex-col items-center">
+                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
+                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
+                        <h3 class="text-base font-bold text-[#0f172a]">Apks</h3>
+                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
+                    </div>
+                </div>
+
+                <!-- Quadro 4: Verificados Contra Vírus -->
+                <div class="tree-line flex flex-col items-center">
+                    <div class="holo-card w-full max-w-[180px] p-4 border border-emerald-100 bg-emerald-50/30 rounded-2xl font-mono text-center">
+                        <span class="text-xs tracking-wide text-emerald-200 block mb-1">┌─────────┐</span>
+                        <h3 class="text-xs font-bold text-emerald-600 uppercase tracking-wider py-1">Verificados</h3>
+                        <span class="text-xs tracking-wide text-emerald-200 block mt-1">└─────────┘</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- REPOSITÓRIO PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 pb-24">
+        <div class="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#3ddc84] animate-pulse"></div>
+            <h2 class="text-lg font-mono font-medium text-gray-500">Pacotes Compilados Disponíveis</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-6">
+            <!-- CARD DO PORT DO QUICKSTEP -->
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">System UI Component</span>
+                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep</h3>
+                        <p class="text-sm text-gray-500 mt-1">Port estável do ecossistema CinnamonBun adaptado com retrocompatibilidade para Android 14 (SDK 34).</p>
+                    </div>
+                </div>
+                
+                <!-- Changelog Limpo -->
+                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                    <p class="mb-0.5">• Contornadas as chamadas de campos ocultos de compilação da GSI do Google.</p>
+                    <p class="mb-0.5">• Forçados os aliases de inicialização para herdar o comportamento de Grid clássico.</p>
+                </div>
+
+                <!-- Ações e Assinatura de Segurança -->
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
+                    <div class="font-mono text-xs text-gray-400">
+                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
+                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded md:inline-block">Pendente de verificação local</span>
+                    </div>
+                    <div class="flex gap-3 shrink-0">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">
+                            Código Fonte
+                        </a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Ports/AOSP.17.CinammonBun.QuickStepLauncher3.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm hover:shadow-md">
+                            Download APK
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
