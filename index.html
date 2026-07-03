@@ -37,6 +37,21 @@
             background-position: 0% 100%;
         }
 
+        /* Efeito Holográfico Desfocado para o Texto de Assinatura */
+        .holo-text {
+            background-image: linear-gradient(90deg, #3ddc84, #9333ea, #3ddc84);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: holoShine 4s linear infinite;
+            filter: drop-shadow(0 0 4px rgba(61, 220, 132, 0.3)) blur(0.3px);
+        }
+
+        @keyframes holoShine {
+            to { background-position: 200% center; }
+        }
+
         /* Linhas conectoras da árvore estilo AOSP */
         .tree-line {
             position: relative;
@@ -54,21 +69,24 @@
         }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#3ddc84] selection:text-[#1e293b]">
+<body class="bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#3ddc84] selection:text-[#1e293b] flex flex-col min-h-screen">
 
     <!-- HEADER / HERO SECTION (AOSP Claro) -->
     <header class="max-w-5xl mx-auto pt-16 pb-12 px-4 text-center animate-fade-in">
         <h1 class="text-3xl md:text-5xl font-sans font-normal tracking-tight text-[#0f172a] mb-2">
             Android Open Source Project
         </h1>
-        <p class="text-xs font-mono tracking-widest text-gray-400 uppercase mb-6">CinnamonBun Ecosystem</p>
         
-        <!-- Robô Android Centralizado -->
+        <!-- Assinatura Holográfica Adicionada -->
+        <h2 class="text-lg md:text-xl font-mono tracking-wide holo-text mb-6 font-medium">
+            Portado e modificado por Saulo R
+        </h2>
+        
+        <!-- Robô Android Centralizado (Imagem Real do Bugdroid) -->
         <div class="inline-flex flex-col items-center justify-center my-4 group">
-            <div class="p-4 bg-white rounded-full shadow-sm border border-gray-100 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
-                <svg class="w-16 h-16 text-[#3ddc84]" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2a1 1 0 0 1 1 1v1.07A7.002 7.002 0 0 1 19 11v1H5v-1a7.002 7.002 0 0 1 6-6.93V3a1 1 0 0 1 1-1m-4.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M3 13h18a1 1 0 0 1 1 1v4a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-4a1 1 0 0 1 1-1z"/>
-                </svg>
+            <div class="p-4 bg-white rounded-full shadow-sm border border-gray-100 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                <!-- Usando o arquivo SVG oficial do Bugdroid hospedado na Wikimedia -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Bugdroid AOSP Original" class="w-16 h-16 drop-shadow-sm">
             </div>
             <span class="text-xl font-bold font-mono tracking-widest mt-3 lowercase text-[#2cb86a]">android</span>
         </div>
@@ -78,13 +96,9 @@
 
         <!-- LINHA HORIZONTAL CONECTORAL E QUADROS HOLOGRÁFICOS -->
         <div class="relative max-w-4xl mx-auto px-4">
-            <!-- Linha horizontal que une os blocos no PC -->
             <div class="absolute top-0 left-[12.5%] right-[12.5%] h-0.5 bg-gray-200 hidden md:block"></div>
             
-            <!-- Grid de Quadros -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 pt-6">
-                
-                <!-- Quadro 1: Ports -->
                 <div class="tree-line flex flex-col items-center">
                     <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
                         <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
@@ -92,8 +106,6 @@
                         <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
                     </div>
                 </div>
-
-                <!-- Quadro 2: Mods Open Source -->
                 <div class="tree-line flex flex-col items-center">
                     <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
                         <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
@@ -101,8 +113,6 @@
                         <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
                     </div>
                 </div>
-
-                <!-- Quadro 3: Apks -->
                 <div class="tree-line flex flex-col items-center">
                     <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
                         <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
@@ -110,8 +120,6 @@
                         <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
                     </div>
                 </div>
-
-                <!-- Quadro 4: Verificados Contra Vírus -->
                 <div class="tree-line flex flex-col items-center">
                     <div class="holo-card w-full max-w-[180px] p-4 border border-emerald-100 bg-emerald-50/30 rounded-2xl font-mono text-center">
                         <span class="text-xs tracking-wide text-emerald-200 block mb-1">┌─────────┐</span>
@@ -119,19 +127,70 @@
                         <span class="text-xs tracking-wide text-emerald-200 block mt-1">└─────────┘</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>
 
     <!-- REPOSITÓRIO PRINCIPAL -->
-    <main class="max-w-4xl mx-auto px-4 pb-24">
+    <main class="max-w-4xl mx-auto px-4 flex-grow w-full">
         <div class="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
             <div class="w-2.5 h-2.5 rounded-full bg-[#3ddc84] animate-pulse"></div>
             <h2 class="text-lg font-mono font-medium text-gray-500">Pacotes Compilados Disponíveis</h2>
         </div>
         
         <div class="grid grid-cols-1 gap-6">
+
+            <!-- CARD 7: MUSIC PLAYER ANDROID 1.0 (NOVO) -->
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                    <div>
+                        <span class="text-xs font-mono px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full font-medium">Media App • Retro Port</span>
+                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Android 1.0 Open Source Music Player</h3>
+                        <p class="text-sm text-gray-500 mt-1">A interface clássica do player musical nativo das primeiras versões do sistema Android estruturada para uso atual.</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                    <p class="mb-0.5">• Engenharia reversa no pacote base para estabilização de arquitetura moderna.</p>
+                    <p class="mb-0.5">• Limpeza meticulosa de código Smali para fixação de crashes na Activity de Interface de Usuário (resolução de IllegalStateException).</p>
+                </div>
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
+                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
+                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
+                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">2802dab41ba8486cd5ac7ff6e806ee4a2fea88ce00e95b6f54241c841bc606aa</span>
+                    </div>
+                    <div class="flex gap-3 shrink-0 items-end">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A14_music/Music_android_1-17.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 8: WEBVIEW SHELL BROWSER (NOVO) -->
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                    <div>
+                        <span class="text-xs font-mono px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-full font-medium">System App • Web Browser</span>
+                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">WebviewShell (Browser AOSP 14)</h3>
+                        <p class="text-sm text-gray-500 mt-1">O navegador embutido super veloz compilado diretamente da árvore do Android 14 com correções fundamentais de uso.</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                    <p class="mb-0.5">• Implementada integração robusta para realizar downloads nativamente via DownloadManager do sistema.</p>
+                    <p class="mb-0.5">• Corrigido e habilitado o suporte nativo para upload de arquivos em páginas web.</p>
+                </div>
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
+                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
+                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
+                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">a02e3ca33255dbdd9ba82bfe1431c581ad5218e39d800f09721f30a7a33c76b8</span>
+                    </div>
+                    <div class="flex gap-3 shrink-0 items-end">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14_Browser/Browser2.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
+                    </div>
+                </div>
+            </div>
 
             <!-- CARD 1: LAUNCHER3 QUICKSTEP (AOSP 17) -->
             <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
@@ -284,11 +343,32 @@
                 </div>
             </div>
 
+            <!-- SEÇÃO LEGAL: LICENÇA APACHE 2.0 -->
+            <div class="mt-12 p-6 border border-gray-300 rounded-3xl bg-[#f1f5f9] shadow-sm mb-12">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    <h3 class="font-bold text-gray-700 tracking-wide text-lg">Licença e Distribuição</h3>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed font-mono">
+                    Todos os pacotes distribuídos nesta página operam sob a licença de software livre <strong>Apache License, Versão 2.0</strong>. Você pode obter uma cópia da licença em <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" class="text-blue-600 hover:underline">http://www.apache.org/licenses/LICENSE-2.0</a>. 
+                    <br><br>
+                    Os binários fornecidos são modificações diretas de código-fonte aberto baseadas na infraestrutura do Android Open Source Project. Distribuídos "NO ESTADO EM QUE SE ENCONTRAM", SEM GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO.
+                </p>
+            </div>
+
         </div>
     </main>
 
+    <!-- FOOTER EXIGIDO -->
+    <footer class="w-full text-center py-8 mt-auto">
+        <p class="text-sm text-gray-400 font-mono tracking-widest lowercase">a experiência pura diferenciada do android para o usuário.</p>
+    </footer>
+
 </body>
 </html>
+
 
 
 
