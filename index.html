@@ -140,19 +140,27 @@
         
         <div class="grid grid-cols-1 gap-6">
 
-            <!-- CARD 7: MUSIC PLAYER ANDROID 1.0 (NOVO) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full font-medium">Media App • Retro Port</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Android 1.0 Open Source Music Player</h3>
-                        <p class="text-sm text-gray-500 mt-1">A interface clássica do player musical nativo das primeiras versões do sistema Android estruturada para uso atual.</p>
+            <!-- CARD 7: MUSIC PLAYER ANDROID 1.0 -->
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full font-medium">Media App • Retro Port</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Android 1.0 Open Source Music Player</h3>
+                            <p class="text-sm text-gray-500 mt-1">A interface clássica do player musical nativo das primeiras versões do sistema Android estruturada para uso atual.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Engenharia reversa no pacote base para estabilização de arquitetura moderna.</p>
-                    <p class="mb-0.5">• Limpeza meticulosa de código Smali para fixação de crashes na Activity de Interface de Usuário (resolução de IllegalStateException).</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/music_player.png" alt="Screenshot do Android 1.0 Music Player" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Engenharia reversa no pacote base para estabilização de arquitetura moderna.</p>
+                        <p class="mb-0.5">• Limpeza meticulosa de código Smali para fixação de crashes na Activity de Interface de Usuário (resolução de IllegalStateException).</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -166,19 +174,27 @@
                 </div>
             </div>
 
-            <!-- CARD 8: WEBVIEW SHELL BROWSER (NOVO) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-full font-medium">System App • Web Browser</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">WebviewShell (Browser AOSP 14)</h3>
-                        <p class="text-sm text-gray-500 mt-1">O navegador embutido super veloz compilado diretamente da árvore do Android 14 com correções fundamentais de uso.</p>
+            <!-- CARD 8: WEBVIEW SHELL BROWSER -->
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-full font-medium">System App • Web Browser</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">WebviewShell (Browser AOSP 14)</h3>
+                            <p class="text-sm text-gray-500 mt-1">O navegador embutido super veloz compilado diretamente da árvore do Android 14 com correções fundamentais de uso.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Implementada integração robusta para realizar downloads nativamente via DownloadManager do sistema.</p>
-                    <p class="mb-0.5">• Corrigido e habilitado o suporte nativo para upload de arquivos em páginas web.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/webview_shell.png" alt="Screenshot do WebviewShell Browser" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Implementada integração robusta para realizar downloads nativamente via DownloadManager do sistema.</p>
+                        <p class="mb-0.5">• Corrigido e habilitado o suporte nativo para upload de arquivos em páginas web.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -193,18 +209,26 @@
             </div>
 
             <!-- CARD 1: LAUNCHER3 QUICKSTEP (AOSP 17) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">System UI • Android 17</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 17)</h3>
-                        <p class="text-sm text-gray-500 mt-1">Port estável do ecossistema CinnamonBun adaptado com retrocompatibilidade para Android 14 (SDK 34).</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">System UI • Android 17</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 17)</h3>
+                            <p class="text-sm text-gray-500 mt-1">Port estável do ecossistema CinnamonBun adaptado com retrocompatibilidade para Android 14 (SDK 34).</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Contornadas as chamadas de campos ocultos de compilação da GSI do Google.</p>
-                    <p class="mb-0.5">• Forçados os aliases de inicialização para herdar o comportamento de Grid clássico.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/launcher3_aosp17.png" alt="Screenshot do Launcher3 AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Contornadas as chamadas de campos ocultos de compilação da GSI do Google.</p>
+                        <p class="mb-0.5">• Forçados os aliases de inicialização para herdar o comportamento de Grid clássico.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -219,17 +243,25 @@
             </div>
 
             <!-- CARD 2: LAUNCHER3 QUICKSTEP (AOSP 14) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">System UI • Android 14</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 14)</h3>
-                        <p class="text-sm text-gray-500 mt-1">A interface inicial limpa e original compilada diretamente da base do Android 14 puro.</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">System UI • Android 14</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 14)</h3>
+                            <p class="text-sm text-gray-500 mt-1">A interface inicial limpa e original compilada diretamente da base do Android 14 puro.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Compilação limpa voltada à preservação e customização do sistema.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/launcher3_aosp14.png" alt="Screenshot do Launcher3 AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Compilação limpa voltada à preservação e customização do sistema.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -244,17 +276,25 @@
             </div>
 
             <!-- CARD 3: DOCUMENTSUI -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">System App • Port</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">DocumentsUI</h3>
-                        <p class="text-sm text-gray-500 mt-1">O gerenciador de arquivos nativo do Android modificado e portado com sucesso para rodar e instalar como um aplicativo de usuário comum.</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">System App • Port</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">DocumentsUI</h3>
+                            <p class="text-sm text-gray-500 mt-1">O gerenciador de arquivos nativo do Android modificado e portado com sucesso para rodar e instalar como um aplicativo de usuário comum.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Alterada a assinatura de plataforma e permissões internas para permitir instalação em qualquer dispositivo não-root.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/documentsui.png" alt="Screenshot do DocumentsUI" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Alterada a assinatura de plataforma e permissões internas para permitir instalação em qualquer dispositivo não-root.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -269,17 +309,25 @@
             </div>
 
             <!-- CARD 4: GALLERY2 (GALERIA 3D) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">Media App • Fix Library</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Galeria 3D (Gallery2)</h3>
-                        <p class="text-sm text-gray-500 mt-1">A clássica e veloz galeria de fotos do AOSP compilada de forma independente.</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">Media App • Fix Library</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Galeria 3D (Gallery2)</h3>
+                            <p class="text-sm text-gray-500 mt-1">A clássica e veloz galeria de fotos do AOSP compilada de forma independente.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Portado com a injeção correta de bibliotecas (.so) compartilhadas locais para evitar fechamento repentino do editor de fotos integrado.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/gallery2.png" alt="Screenshot da Galeria 3D Gallery2" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Portado com a injeção correta de bibliotecas (.so) compartilhadas locais para evitar fechamento repentino do editor de fotos integrado.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -294,17 +342,25 @@
             </div>
 
             <!-- CARD 5: LATINIME (AOSP 14) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full font-medium">IME • Keyboard</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 14)</h3>
-                        <p class="text-sm text-gray-500 mt-1">O teclado nativo do sistema do Android 14 estável, ultra leve e livre de telemetria.</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full font-medium">IME • Keyboard</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 14)</h3>
+                            <p class="text-sm text-gray-500 mt-1">O teclado nativo do sistema do Android 14 estável, ultra leve e livre de telemetria.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Extraído e empacotado diretamente da árvore estável para preservação de performance.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/latinime_aosp14.png" alt="Screenshot do LatinIME AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Extraído e empacotado diretamente da árvore estável para preservação de performance.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -319,17 +375,25 @@
             </div>
 
             <!-- CARD 6: LATINIME (AOSP 17) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                    <div>
-                        <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">IME • Keyboard • Experimental</span>
-                        <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 17)</h3>
-                        <p class="text-sm text-gray-500 mt-1">Port de última geração do teclado nativo direto do ecossistema CinnamonBun.</p>
+            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">IME • Keyboard • Experimental</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 17)</h3>
+                            <p class="text-sm text-gray-500 mt-1">Port de última geração do teclado nativo direto do ecossistema CinnamonBun.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                    <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                    <p class="mb-0.5">• Adaptados dicionários de sistema atualizados e libs de compilação da árvore do Android 17.</p>
+                    
+                    <!-- Espaço para Imagem Adicionado -->
+                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
+                        <img src="assets/latinime_aosp17.png" alt="Screenshot do LatinIME AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
+                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Adaptados dicionários de sistema atualizados e libs de compilação da árvore do Android 17.</p>
+                    </div>
                 </div>
                 <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                     <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
@@ -368,8 +432,5 @@
 
 </body>
 </html>
-
-
-
 
 
