@@ -3,518 +3,572 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AOSP CinnamonBun Hub</title>
-    <!-- Tailwind CSS v4 -->
+    <title>XaulinXs Foundry</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Efeito de brilho holográfico animado para os elementos CinnamonBun padrão */
-        .holo-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .holo-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(125deg, transparent 30%, rgba(61, 220, 132, 0.15) 40%, rgba(147, 51, 234, 0.1) 50%, transparent 70%);
-            background-size: 200% 200%;
-            background-position: 200% 0%;
-            transition: background-position 0.6s ease;
-            pointer-events: none;
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-2: #1c2333;
+            --line: #26304a;
+            --text: #e2e8f0;
+            --text-dim: #8b98b0;
+            --green: #3ddc84;
+            --blue: #58a6ff;
+            --amber: #f0883e;
         }
 
-        .holo-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(61, 220, 132, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
-            border-color: rgba(61, 220, 132, 0.4);
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse 900px 500px at 15% -10%, rgba(61,220,132,0.08), transparent),
+                radial-gradient(ellipse 700px 500px at 90% 10%, rgba(88,166,255,0.06), transparent);
         }
 
-        .holo-card:hover::before {
-            background-position: 0% 100%;
+        /* Textura de scanline sutil, remete a terminal/logcat sem pesar */
+        .crt-texture {
+            background-image: repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.015) 0px,
+                rgba(255,255,255,0.015) 1px,
+                transparent 1px,
+                transparent 3px
+            );
         }
 
-        /* NOVO: Efeito Holográfico Escuro (Tron Style) para Android 3.0 Honeycomb */
-        .holo-honeycomb-card {
-            background: rgba(15, 23, 42, 0.90);
-            backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #1e293b;
-        }
-        
-        .holo-honeycomb-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(125deg, transparent 30%, rgba(56, 189, 248, 0.15) 40%, rgba(14, 165, 233, 0.1) 50%, transparent 70%);
-            background-size: 200% 200%;
-            background-position: 200% 0%;
-            transition: background-position 0.6s ease;
-            pointer-events: none;
-        }
+        .mono { font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace; }
 
-        .holo-honeycomb-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3);
-            border-color: rgba(56, 189, 248, 0.5);
+        /* Cursor piscante do terminal de boot */
+        .cursor-blink::after {
+            content: '▌';
+            animation: blink 1s step-start infinite;
+            color: var(--green);
         }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        .holo-honeycomb-card:hover::before {
-            background-position: 0% 100%;
-        }
-
-        /* Efeito Holográfico Desfocado para o Texto de Assinatura */
+        /* Texto holográfico assinatura */
         .holo-text {
-            background-image: linear-gradient(90deg, #3ddc84, #9333ea, #3ddc84);
+            background-image: linear-gradient(90deg, #3ddc84, #58a6ff, #3ddc84);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: holoShine 4s linear infinite;
-            filter: drop-shadow(0 0 4px rgba(61, 220, 132, 0.3)) blur(0.3px);
+            animation: holoShine 5s linear infinite;
         }
+        @keyframes holoShine { to { background-position: 200% center; } }
 
-        @keyframes holoShine {
-            to { background-position: 200% center; }
-        }
-
-        /* Linhas conectoras da árvore estilo AOSP */
-        .tree-line {
+        /* Card base unificado — substitui holo-card + holo-honeycomb-card */
+        .pkg-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
             position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
-        @media (min-width: 768px) {
-            .tree-line::before {
-                content: '';
-                position: absolute;
-                top: -24px;
-                left: 50%;
-                width: 1px;
-                height: 24px;
-                background-color: #cbd5e1;
-            }
+        .pkg-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg, transparent 30%, rgba(61,220,132,0.06) 45%, rgba(88,166,255,0.05) 55%, transparent 70%);
+            background-size: 200% 200%;
+            background-position: 200% 0%;
+            transition: background-position 0.6s ease;
+            pointer-events: none;
         }
+        .pkg-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(61,220,132,0.35);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+        }
+        .pkg-card:hover::before { background-position: 0% 100%; }
+
+        /* Acento de geração de API — a única variável visual real entre cards */
+        .gen-14 { border-left: 3px solid var(--blue); }
+        .gen-17 { border-left: 3px solid var(--green); }
+        .gen-legacy { border-left: 3px solid var(--amber); }
+
+        .build-tag {
+            font-size: 0.68rem;
+            letter-spacing: 0.04em;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            border: 1px solid;
+            white-space: nowrap;
+        }
+        .tag-14 { color: var(--blue); border-color: rgba(88,166,255,0.35); background: rgba(88,166,255,0.08); }
+        .tag-17 { color: var(--green); border-color: rgba(61,220,132,0.35); background: rgba(61,220,132,0.08); }
+        .tag-legacy { color: var(--amber); border-color: rgba(240,136,62,0.35); background: rgba(240,136,62,0.08); }
+
+        /* Indicador de dificuldade — barras estilo sinal, informação real, não decoração */
+        .diff-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+        .diff-bars span { width: 3px; background: var(--line); border-radius: 1px; }
+        .diff-bars span:nth-child(1) { height: 4px; }
+        .diff-bars span:nth-child(2) { height: 7px; }
+        .diff-bars span:nth-child(3) { height: 10px; }
+        .diff-bars span:nth-child(4) { height: 12px; }
+        .diff-1 span:nth-child(1) { background: var(--amber); }
+        .diff-2 span:nth-child(1), .diff-2 span:nth-child(2) { background: var(--amber); }
+        .diff-3 span:nth-child(1), .diff-3 span:nth-child(2), .diff-3 span:nth-child(3) { background: var(--amber); }
+        .diff-4 span { background: var(--amber); }
+
+        .sha-box {
+            font-size: 0.68rem;
+            background: #0a0e14;
+            border: 1px solid var(--line);
+            color: #6b7889;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+
+        .btn-code {
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+            transition: all 0.2s ease;
+        }
+        .btn-code:hover { border-color: var(--green); color: var(--green); background: rgba(61,220,132,0.06); }
+
+        .btn-download {
+            background: var(--green);
+            color: #0a2015;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-download:hover { background: #4de892; box-shadow: 0 0 20px rgba(61,220,132,0.35); }
+
+        .preview-frame {
+            background: #0a0e14;
+            border: 1px solid var(--line);
+        }
+        .preview-frame img { transition: transform 0.4s ease; }
+        .preview-frame:hover img { transform: scale(1.03); }
+
+        /* Ancoras funcionais do topo */
+        .nav-pill {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .nav-pill:hover { border-color: var(--green); background: rgba(61,220,132,0.08); }
+        .nav-pill.active { border-color: var(--green); background: rgba(61,220,132,0.1); }
+
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+        }
+
+        .boot-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: bootIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes bootIn { to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) {
+            .boot-in { animation: none; opacity: 1; transform: none; }
+            .cursor-blink::after { animation: none; }
+        }
+
+        ::selection { background: var(--green); color: #0a2015; }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#3ddc84] selection:text-[#1e293b] flex flex-col min-h-screen">
+<body class="crt-texture text-[#e2e8f0] font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- HEADER / HERO SECTION (AOSP Claro) -->
-    <header class="max-w-5xl mx-auto pt-16 pb-12 px-4 text-center animate-fade-in">
-        <h1 class="text-3xl md:text-5xl font-sans font-normal tracking-tight text-[#0f172a] mb-2">
-            Android Open Source Project
-        </h1>
-        
-        <!-- Assinatura Holográfica Adicionada -->
-        <h2 class="text-lg md:text-xl font-mono tracking-wide holo-text mb-6 font-medium">
-            Portado e modificado por Saulo R
-        </h2>
-        
-        <!-- Robô Android Centralizado (Imagem Real do Bugdroid) -->
-        <div class="inline-flex flex-col items-center justify-center my-4 group">
-            <div class="p-4 bg-white rounded-full shadow-sm border border-gray-100 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                <!-- Usando o arquivo SVG oficial do Bugdroid hospedado na Wikimedia -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Bugdroid AOSP Original" class="w-16 h-16 drop-shadow-sm">
-            </div>
-            <span class="text-xl font-bold font-mono tracking-widest mt-3 lowercase text-[#2cb86a]">android</span>
+    <!-- HEADER: simula tela de "Sobre o telefone" / build fingerprint -->
+    <header class="max-w-4xl mx-auto pt-14 pb-10 px-4">
+        <div class="mono text-center">
+            <p class="text-xs text-[#6b7889] tracking-widest uppercase mb-3">android open source project</p>
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">XaulinXs Foundry</h1>
+            <h2 class="text-sm md:text-base holo-text font-medium mb-6">Android Modding • Reverse Engineering • Open Source • Tools &amp; Packs</h2>
         </div>
 
-        <!-- Linha vertical conectora principal -->
-        <div class="w-0.5 h-12 bg-gray-200 mx-auto"></div>
-
-        <!-- LINHA HORIZONTAL CONECTORAL E QUADROS HOLOGRÁFICOS -->
-        <div class="relative max-w-4xl mx-auto px-4">
-            <div class="absolute top-0 left-[12.5%] right-[12.5%] h-0.5 bg-gray-200 hidden md:block"></div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 pt-6">
-                <div class="tree-line flex flex-col items-center">
-                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
-                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
-                        <h3 class="text-base font-bold text-[#0f172a]">Ports</h3>
-                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
-                    </div>
-                </div>
-                <div class="tree-line flex flex-col items-center">
-                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
-                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
-                        <h3 class="text-sm font-bold text-[#0f172a] leading-tight py-0.5">Mods Open Source</h3>
-                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
-                    </div>
-                </div>
-                <div class="tree-line flex flex-col items-center">
-                    <div class="holo-card w-full max-w-[180px] p-4 border border-gray-200 rounded-2xl font-mono text-center">
-                        <span class="text-xs tracking-wide text-gray-300 block mb-1">┌─────────┐</span>
-                        <h3 class="text-base font-bold text-[#0f172a]">Apks</h3>
-                        <span class="text-xs tracking-wide text-gray-300 block mt-1">└─────────┘</span>
-                    </div>
-                </div>
-                <div class="tree-line flex flex-col items-center">
-                    <div class="holo-card w-full max-w-[180px] p-4 border border-emerald-100 bg-emerald-50/30 rounded-2xl font-mono text-center">
-                        <span class="text-xs tracking-wide text-emerald-200 block mb-1">┌─────────┐</span>
-                        <h3 class="text-xs font-bold text-emerald-600 uppercase tracking-wider py-1">Verificados</h3>
-                        <span class="text-xs tracking-wide text-emerald-200 block mt-1">└─────────┘</span>
-                    </div>
-                </div>
+        <!-- Bugdroid -->
+        <div class="flex flex-col items-center justify-center my-6 group">
+            <div class="p-4 bg-[#161b22] rounded-full border border-[#26304a] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Bugdroid AOSP" class="w-14 h-14">
             </div>
         </div>
+
+        <!-- Terminal de build info -->
+        <div class="max-w-lg mx-auto bg-[#0a0e14] border border-[#26304a] rounded-xl p-4 mono text-xs leading-relaxed">
+            <p class="text-[#6b7889]">$ adb shell getprop ro.build.fingerprint</p>
+            <p class="text-[#3ddc84]">aosp/cinnamonbun/generic:17/CB37/eng.saulo:userdebug</p>
+            <p class="text-[#6b7889] mt-2">$ status --repositório</p>
+            <p class="text-[#e2e8f0]">10 pacotes <span class="text-[#3ddc84]">compilados</span> · 2 gerações de API · verificação SHA-256 ativa<span class="cursor-blink"></span></p>
+        </div>
+
+        <!-- LEGENDAS FUNCIONAIS: âncoras reais para as seções abaixo -->
+        <nav class="grid grid-cols-2 md:grid-cols-4 gap-2 max-w-2xl mx-auto mt-8">
+            <a href="#flagship" class="nav-pill mono text-center text-xs py-2.5 px-2 rounded-lg border border-[#26304a] bg-[#161b22] text-[#e2e8f0]">
+                <span class="block font-bold text-[#f0883e]">Flagship</span>
+                <span class="block text-[#6b7889] text-[10px] mt-0.5">reverse eng. pesada</span>
+            </a>
+            <a href="#ports" class="nav-pill mono text-center text-xs py-2.5 px-2 rounded-lg border border-[#26304a] bg-[#161b22] text-[#e2e8f0]">
+                <span class="block font-bold text-[#58a6ff]">Ports Ativos</span>
+                <span class="block text-[#6b7889] text-[10px] mt-0.5">API 34 / API 37</span>
+            </a>
+            <a href="#legacy" class="nav-pill mono text-center text-xs py-2.5 px-2 rounded-lg border border-[#26304a] bg-[#161b22] text-[#e2e8f0]">
+                <span class="block font-bold text-[#f0883e]">Legacy Honeycomb</span>
+                <span class="block text-[#6b7889] text-[10px] mt-0.5">API 11 preservado</span>
+            </a>
+            <a href="#verificados" class="nav-pill mono text-center text-xs py-2.5 px-2 rounded-lg border border-[#3ddc84]/30 bg-[#3ddc84]/5">
+                <span class="block font-bold text-[#3ddc84]">Verificados</span>
+                <span class="block text-[#6b7889] text-[10px] mt-0.5">10/10 com SHA-256</span>
+            </a>
+        </nav>
     </header>
 
-    <!-- REPOSITÓRIO PRINCIPAL -->
     <main class="max-w-4xl mx-auto px-4 flex-grow w-full">
-        <div class="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
-            <div class="w-2.5 h-2.5 rounded-full bg-[#3ddc84] animate-pulse"></div>
-            <h2 class="text-lg font-mono font-medium text-gray-500">Pacotes Compilados Disponíveis</h2>
-        </div>
-        
-        <div class="grid grid-cols-1 gap-6">
 
-            <!-- NOVO CARD: LAUNCHER2 ANDROID 3.0 (Tema Tron/Escuro) -->
-            <div class="holo-honeycomb-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+        <!-- ============ ZONA 1: FLAGSHIP — engenharia reversa mais difícil ============ -->
+        <section id="flagship" class="scroll-mt-8 mb-14">
+            <div class="flex items-center gap-3 mb-2 pt-4">
+                <div class="w-2 h-2 rounded-full bg-[#f0883e]"></div>
+                <h2 class="section-label mono font-bold text-[#f0883e] uppercase">Flagship — Engenharia Reversa Pesada</h2>
+            </div>
+            <p class="text-sm text-[#8b98b0] mb-6 max-w-2xl">Trabalhos que exigiram patch em nível de Smali, correção de VerifyError do ART, ou reestruturação de comportamento que não existe em nenhuma documentação oficial.</p>
+
+            <div class="grid grid-cols-1 gap-5">
+
+                <!-- FLAGSHIP 1: Launcher3 Quickstep AOSP 17 → 14 -->
+                <div class="pkg-card gen-17 rounded-2xl p-6 sm:p-7 boot-in" style="animation-delay:0ms">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                         <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-sky-900/50 text-sky-300 border border-sky-700 rounded-full font-medium shadow-inner">System UI • Honeycomb API 11</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#f8fafc] mt-3">Launcher2 (Android 3.0)</h3>
-                            <p class="text-sm text-[#cbd5e1] mt-2">A interface de celular portida com a icônica doca do Gingerbread, trazendo um sistema de grid completamente livre.</p>
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="build-tag tag-17 mono">API 37 · CinnamonBun</span>
+                                <span class="diff-bars diff-4" title="Dificuldade: muito alta"><span></span><span></span><span></span><span></span></span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Launcher3 Quickstep (AOSP 17 → 14)</h3>
+                            <p class="text-sm text-[#8b98b0] mt-1">O port mais desafiador do hub — retroporte completo do launcher CinnamonBun cruzando duas gerações de API incompatíveis.</p>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-sky-900/50 bg-[#0f172a] flex justify-center items-center max-h-[320px]">
-                        <img src="assets/launcher2_honeycomb.png" alt="Screenshot do Launcher2 Honeycomb" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    <div class="preview-frame my-4 overflow-hidden rounded-xl flex justify-center items-center max-h-[320px]">
+                        <img src="assets/launcher3_aosp17.png" alt="Screenshot do Launcher3 AOSP 17" class="w-full h-full object-contain max-h-[320px]">
                     </div>
-
-                    <div class="bg-slate-800/50 rounded-2xl p-4 my-4 font-mono text-xs text-slate-300 border border-slate-700">
-                        <p class="text-sky-400 font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Desbloqueio da matriz de grid, permitindo salvar ícones, widgets e imagens em absolutamente qualquer lugar da tela sem restrições de alinhamento.</p>
-                        <p class="mb-0.5">• Fusão da usabilidade de smartphone com a estética holográfica original de tablet.</p>
+                    <div class="bg-[#1c2333] rounded-xl p-4 my-4 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1.5">Modificações realizadas:</p>
+                        <p class="mb-1">• <span class="text-white">RecentsView</span> transformada em um FrameLayout simples, desativando por completo a tela de apps recentes e reduzindo o launcher ao comportamento de um launcher comum.</p>
+                        <p class="mb-1">• Dezenas de APIs inexistentes na base do Android 14 reescritas ou neutralizadas, já que o app foi extraído diretamente do ecossistema Android 17.</p>
+                        <p class="mb-1">• Stub cirúrgico em <span class="text-white">DepthController</span> e <span class="text-white">BaseDepthControllerImpl</span> para desativar o pipeline de blur/depth, incompatível com API 34.</p>
+                        <p class="mb-1">• Correção de <span class="text-white">VerifyError</span> em <span class="text-white">WorkspaceItemProcessor.processWidget()</span> causado por conflito de tipo do ART — resolvido reaproveitando registradores v0–v15 já sem valor vivo, em vez de introduzir registradores altos que violam o formato Dalvik 35c.</p>
                     </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-slate-700">
-                    <div class="font-mono text-xs text-slate-400 w-full max-w-xl">
-                        <span class="text-slate-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-sky-300 mt-0.5 select-all bg-[#0f172a] px-2 py-1 rounded border border-slate-800 break-all">89c1ac444d6787ace91dd8a2f4d5a0112c1dd2e2fe80e569b41ddcc784442397</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Launcher_2/Launcher2.apk" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-900 text-sm font-bold rounded-xl transition-all font-mono shadow-[0_0_15px_rgba(14,165,233,0.4)]">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NOVO CARD: MUSIC PLAYER ANDROID 3.0 (Tema Tron/Escuro) -->
-            <div class="holo-honeycomb-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-cyan-900/50 text-cyan-300 border border-cyan-700 rounded-full font-medium shadow-inner">Media App • Honeycomb API 11</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#f8fafc] mt-3">Honeycomb Music Player</h3>
-                            <p class="text-sm text-[#cbd5e1] mt-2">O clássico reprodutor musical com o design nostálgico mantido intacto da era do Android 3.0.</p>
+                    <div class="mt-5 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-[#26304a]">
+                        <div class="mono w-full max-w-xl">
+                            <span class="text-[#6b7889] font-medium text-xs">SHA-256</span>
+                            <span class="sha-box block mt-1 select-all">0138d43ac9e89d9696aa1524236554d1838f723061a36d4db8c49eb6920a684a</span>
+                        </div>
+                        <div class="flex gap-3 shrink-0 items-end">
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-4 py-2.5 text-sm rounded-lg">Código</a>
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Ports/AOSP.17.CinammonBun.QuickStepLauncher3.apk" class="btn-download mono px-4 py-2.5 text-sm rounded-lg">Download</a>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-cyan-900/50 bg-[#0f172a] flex justify-center items-center max-h-[320px]">
-                        <img src="assets/music_player_honeycomb.png" alt="Screenshot do Honeycomb Music Player" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
-
-                    <div class="bg-slate-800/50 rounded-2xl p-4 my-4 font-mono text-xs text-slate-300 border border-slate-700">
-                        <p class="text-cyan-400 font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Habilitação forçada de aceleração de hardware nativa para fluidez em rolagem de listas longas.</p>
-                        <p class="mb-0.5">• Preservação rigorosa dos recursos visuais e animações da API 11.</p>
-                    </div>
                 </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-slate-700">
-                    <div class="font-mono text-xs text-slate-400 w-full max-w-xl">
-                        <span class="text-slate-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-cyan-300 mt-0.5 select-all bg-[#0f172a] px-2 py-1 rounded border border-slate-800 break-all">fca2fc86d30bb5129826a3bab2a39c9f6904a103a73faef092a88ad01670dc00</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Music_3.0/Music.apk" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-bold rounded-xl transition-all font-mono shadow-[0_0_15px_rgba(6,182,212,0.4)]">Download</a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- CARD 7: MUSIC PLAYER ANDROID 1.0 -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                <!-- FLAGSHIP 2: Android 1.0 Music Player -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 sm:p-7 boot-in" style="animation-delay:60ms">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                         <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full font-medium">Media App • Retro Port</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Android 1.0 Open Source Music Player</h3>
-                            <p class="text-sm text-gray-500 mt-1">A interface clássica do player musical nativo das primeiras versões do sistema Android estruturada para uso atual.</p>
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="build-tag tag-14 mono">API 34 · Android 14</span>
+                                <span class="diff-bars diff-3" title="Dificuldade: alta"><span></span><span></span><span></span><span></span></span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 mt-1 mb-1">
+                                <span class="build-tag mono" style="color:#f0883e;border-color:rgba(240,136,62,0.35);background:rgba(240,136,62,0.08)">~380 KB</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Android 1.0 Open Source Music Player</h3>
+                            <p class="text-sm text-[#8b98b0] mt-1">O reprodutor de música mais leve do hub — interface clássica do Android 1.0 modernizada sem inchar o binário.</p>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/music_player.png" alt="Screenshot do Android 1.0 Music Player" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    <div class="preview-frame my-4 overflow-hidden rounded-xl flex justify-center items-center max-h-[320px]">
+                        <img src="assets/music_player.png" alt="Screenshot do Android 1.0 Music Player" class="w-full h-full object-contain max-h-[320px]">
                     </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Engenharia reversa no pacote base para estabilização de arquitetura moderna.</p>
-                        <p class="mb-0.5">• Limpeza meticulosa de código Smali para fixação de crashes na Activity de Interface de Usuário (resolução de IllegalStateException).</p>
+                    <div class="bg-[#1c2333] rounded-xl p-4 my-4 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1.5">Modificações realizadas:</p>
+                        <p class="mb-1">• Lógica de leitura de áudios inteiramente reescrita, com comportamento adaptado ao Android 14 e APIs mortas substituídas por equivalentes compatíveis.</p>
+                        <p class="mb-1">• Serviço de foreground adicionado no manifest com notificação e no Smali em <span class="text-white">MediaPlaybackService</span>, garantindo reprodução suave sem o sistema matar a música mesmo com a tela desligada.</p>
                     </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">2802dab41ba8486cd5ac7ff6e806ee4a2fea88ce00e95b6f54241c841bc606aa</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A14_music/Music_android_1-17.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 8: WEBVIEW SHELL BROWSER -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-full font-medium">System App • Web Browser</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">WebviewShell (Browser AOSP 14)</h3>
-                            <p class="text-sm text-gray-500 mt-1">O navegador embutido super veloz compilado diretamente da árvore do Android 14 com correções fundamentais de uso.</p>
+                    <div class="mt-5 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-[#26304a]">
+                        <div class="mono w-full max-w-xl">
+                            <span class="text-[#6b7889] font-medium text-xs">SHA-256</span>
+                            <span class="sha-box block mt-1 select-all">2802dab41ba8486cd5ac7ff6e806ee4a2fea88ce00e95b6f54241c841bc606aa</span>
+                        </div>
+                        <div class="flex gap-3 shrink-0 items-end">
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-4 py-2.5 text-sm rounded-lg">Código</a>
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A14_music/Music_android_1-17.apk" class="btn-download mono px-4 py-2.5 text-sm rounded-lg">Download</a>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/webview_shell.png" alt="Screenshot do WebviewShell Browser" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Implementada integração robusta para realizar downloads nativamente via DownloadManager do sistema.</p>
-                        <p class="mb-0.5">• Corrigido e habilitado o suporte nativo para upload de arquivos em páginas web.</p>
-                    </div>
                 </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">a02e3ca33255dbdd9ba82bfe1431c581ad5218e39d800f09721f30a7a33c76b8</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14_Browser/Browser2.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- CARD 1: LAUNCHER3 QUICKSTEP (AOSP 17) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                <!-- FLAGSHIP 3: DocumentsUI -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 sm:p-7 boot-in" style="animation-delay:120ms">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                         <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">System UI • Android 17</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 17)</h3>
-                            <p class="text-sm text-gray-500 mt-1">Port estável do ecossistema CinnamonBun adaptado com retrocompatibilidade para Android 14 (SDK 34).</p>
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="build-tag tag-14 mono">API 34 · Android 14</span>
+                                <span class="diff-bars diff-3" title="Dificuldade: alta"><span></span><span></span><span></span><span></span></span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">DocumentsUI</h3>
+                            <p class="text-sm text-[#8b98b0] mt-1">Gerenciador de arquivos nativo do sistema, repackado para instalar e rodar como app comum, fora do contexto de assinatura de plataforma.</p>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/launcher3_aosp17.png" alt="Screenshot do Launcher3 AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    <div class="preview-frame my-4 overflow-hidden rounded-xl flex justify-center items-center max-h-[320px]">
+                        <img src="assets/documentsui.png" alt="Screenshot do DocumentsUI" class="w-full h-full object-contain max-h-[320px]">
                     </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Contornadas as chamadas de campos ocultos de compilação da GSI do Google.</p>
-                        <p class="mb-0.5">• Forçados os aliases de inicialização para herdar o comportamento de Grid clássico.</p>
+                    <div class="bg-[#1c2333] rounded-xl p-4 my-4 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1.5">Modificações realizadas:</p>
+                        <p class="mb-1">• Criado um provider interno de acesso à memória do dispositivo, embutido como classe Smali dentro do próprio APK e declarado no manifest, contornando o acesso negado ao armazenamento pelo SAF do Android.</p>
+                        <p class="mb-1">• Reescritas diversas APIs inexistentes na base do AOSP 14.</p>
                     </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">0138d43ac9e89d9696aa1524236554d1838f723061a36d4db8c49eb6920a684a</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Ports/AOSP.17.CinammonBun.QuickStepLauncher3.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 2: LAUNCHER3 QUICKSTEP (AOSP 14) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">System UI • Android 14</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Launcher3 Quickstep (AOSP 14)</h3>
-                            <p class="text-sm text-gray-500 mt-1">A interface inicial limpa e original compilada diretamente da base do Android 14 puro.</p>
+                    <div class="mt-5 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-[#26304a]">
+                        <div class="mono w-full max-w-xl">
+                            <span class="text-[#6b7889] font-medium text-xs">SHA-256</span>
+                            <span class="sha-box block mt-1 select-all">8c612538ee5b918c617cc22fa88a1d200e6dfb1ddc7c7c681e98e37359045f8d</span>
+                        </div>
+                        <div class="flex gap-3 shrink-0 items-end">
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-4 py-2.5 text-sm rounded-lg">Código</a>
+                            <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Port/DocumentsUI.apk" class="btn-download mono px-4 py-2.5 text-sm rounded-lg">Download</a>
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/launcher3_aosp14.png" alt="Screenshot do Launcher3 AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
+                </div>
 
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Compilação limpa voltada à preservação e customização do sistema.</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">de2a348cb3297ad9435925674a2b854a6b2be5976f84e2e4feade83a3cb3b8b3</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14/Launcher3QuickStep.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
             </div>
+        </section>
 
-            <!-- CARD 3: DOCUMENTSUI -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">System App • Port</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">DocumentsUI</h3>
-                            <p class="text-sm text-gray-500 mt-1">O gerenciador de arquivos nativo do Android modificado e portado com sucesso para rodar e instalar como um aplicativo de usuário comum.</p>
+        <!-- ============ ZONA 2: PORTS ATIVOS — API 34 / API 37 ============ -->
+        <section id="ports" class="scroll-mt-8 mb-14">
+            <div class="flex items-center gap-3 mb-2 pt-4">
+                <div class="w-2 h-2 rounded-full bg-[#58a6ff]"></div>
+                <h2 class="section-label mono font-bold text-[#58a6ff] uppercase">Ports Ativos — Android 14 &amp; CinnamonBun 17</h2>
+            </div>
+            <p class="text-sm text-[#8b98b0] mb-6 max-w-2xl">Compilações estáveis do dia a dia, mantidas em paralelo nas duas gerações de API que este hub cobre.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Launcher3 AOSP 14 -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 boot-in" style="animation-delay:0ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-14 mono">API 34</span>
+                        <span class="diff-bars diff-2" title="Dificuldade: moderada"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Launcher3 Quickstep (AOSP 14)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Interface inicial limpa, extraída diretamente de uma ROM AOSP do Android 14.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/launcher3_aosp14.png" alt="Screenshot do Launcher3 AOSP 14" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p class="mb-0.5">• Tela de recentes desativada, tornando o app um launcher comum.</p>
+                        <p>• APIs inexistentes do pacote original neutralizadas para estabilidade.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">de2a348cb3297ad9435925674a2b854a6b2be5976f84e2e4feade83a3cb3b8b3</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14/Launcher3QuickStep.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Download</a>
+                    </div>
+                </div>
+
+                <!-- WebviewShell -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 boot-in" style="animation-delay:60ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-14 mono">API 34</span>
+                        <span class="diff-bars diff-2" title="Dificuldade: moderada"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">WebviewShell (Browser)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Navegador embutido compilado da árvore Android 14, com funções essenciais adicionadas para uso real.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/webview_shell.png" alt="Screenshot do WebviewShell Browser" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p>• Adicionadas ao código as funções de download e upload de arquivos, tornando o navegador minimamente utilizável.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">a02e3ca33255dbdd9ba82bfe1431c581ad5218e39d800f09721f30a7a33c76b8</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14_Browser/Browser2.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Download</a>
+                    </div>
+                </div>
+
+                <!-- Gallery2 -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 boot-in" style="animation-delay:120ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-14 mono">API 34</span>
+                        <span class="diff-bars diff-2" title="Dificuldade: moderada"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Galeria 3D (Gallery2)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Galeria de fotos clássica do AOSP, compilada de forma independente.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/gallery2.png" alt="Screenshot da Galeria 3D Gallery2" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p>• Bibliotecas nativas extraídas da ROM GSI do AOSP 14 e embutidas no APK, corrigindo o crash e permitindo que o editor de fotos nativo funcione.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">3548ab20225d01a8bb9f343b1f938a0c970df56b276c4648e44678c78e578c8f</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14_G_3D/Gallery2.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Download</a>
+                    </div>
+                </div>
+
+                <!-- LatinIME AOSP 14 -->
+                <div class="pkg-card gen-14 rounded-2xl p-6 boot-in" style="animation-delay:180ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-14 mono">API 34</span>
+                        <span class="diff-bars diff-1" title="Dificuldade: baixa"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">LatinIME (AOSP 14)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Teclado nativo do sistema, estável, leve e livre de telemetria.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/latinime_aosp14.png" alt="Screenshot do LatinIME AOSP 14" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p>• Bibliotecas nativas extraídas da ROM GSI do Android 14 e embutidas no APK, corrigindo o crash de inflação do teclado.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">29c7898b49e6defa8229b64dfd0a4af2a8a20d2c08f151e673b0daa805ee1c07</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Código</a>
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Key/LatinIME_AOSP14.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Download</a>
+                    </div>
+                </div>
+
+                <!-- LatinIME AOSP 17 -->
+                <div class="pkg-card gen-17 rounded-2xl p-6 boot-in sm:col-span-2" style="animation-delay:240ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-17 mono">API 37 · CinnamonBun</span>
+                        <span class="diff-bars diff-2" title="Dificuldade: moderada"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <div class="sm:flex sm:gap-5">
+                        <div class="sm:flex-1">
+                            <h3 class="text-lg font-bold text-white">LatinIME (AOSP 17)</h3>
+                            <p class="text-xs text-[#8b98b0] mt-1 mb-3">Port do teclado nativo direto do ecossistema CinnamonBun.</p>
+                            <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                                <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                                <p>• Bibliotecas nativas extraídas da ROM GSI do Android 17 e embutidas no APK, corrigindo o crash de inflação do teclado.</p>
+                            </div>
+                            <div class="mono mb-3">
+                                <span class="sha-box block select-all text-[10px]">0290b26120a8f74ed03403ef9f72c0868b1187dfe2846e9ccdfd56fd36c15917</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="btn-code mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Código</a>
+                                <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Key/LatinIME_AOSP17.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg flex-1 text-center">Download</a>
+                            </div>
+                        </div>
+                        <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] sm:max-w-[200px] mt-3 sm:mt-0 shrink-0">
+                            <img src="assets/latinime_aosp17.png" alt="Screenshot do LatinIME AOSP 17" class="w-full h-full object-contain max-h-[220px]">
                         </div>
                     </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/documentsui.png" alt="Screenshot do DocumentsUI" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
+                </div>
 
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Alterada a assinatura de plataforma e permissões internas para permitir instalação em qualquer dispositivo não-root.</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">8c612538ee5b918c617cc22fa88a1d200e6dfb1ddc7c7c681e98e37359045f8d</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Port/DocumentsUI.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
             </div>
+        </section>
 
-            <!-- CARD 4: GALLERY2 (GALERIA 3D) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">Media App • Fix Library</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Galeria 3D (Gallery2)</h3>
-                            <p class="text-sm text-gray-500 mt-1">A clássica e veloz galeria de fotos do AOSP compilada de forma independente.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/gallery2.png" alt="Screenshot da Galeria 3D Gallery2" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Portado com a injeção correta de bibliotecas (.so) compartilhadas locais para evitar fechamento repentino do editor de fotos integrado.</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">3548ab20225d01a8bb9f343b1f938a0c970df56b276c4648e44678c78e578c8f</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/A_14_G_3D/Gallery2.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
+        <!-- ============ ZONA 3: LEGACY HONEYCOMB — preservação de API 11 ============ -->
+        <section id="legacy" class="scroll-mt-8 mb-14">
+            <div class="flex items-center gap-3 mb-2 pt-4">
+                <div class="w-2 h-2 rounded-full bg-[#f0883e]"></div>
+                <h2 class="section-label mono font-bold text-[#f0883e] uppercase">Legacy Honeycomb — API 11 Preservado</h2>
             </div>
+            <p class="text-sm text-[#8b98b0] mb-6 max-w-2xl">Apps de 2011 mantidos fiéis à estética original, sem builds de código-fonte publicadas — distribuição apenas em binário.</p>
 
-            <!-- CARD 5: LATINIME (AOSP 14) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full font-medium">IME • Keyboard</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 14)</h3>
-                            <p class="text-sm text-gray-500 mt-1">O teclado nativo do sistema do Android 14 estável, ultra leve e livre de telemetria.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/latinime_aosp14.png" alt="Screenshot do LatinIME AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Extraído e empacotado diretamente da árvore estável para preservação de performance.</p>
+                <!-- Launcher2 Honeycomb -->
+                <div class="pkg-card gen-legacy rounded-2xl p-6 boot-in" style="animation-delay:0ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-legacy mono">API 11 · Honeycomb</span>
+                        <span class="diff-bars diff-3" title="Dificuldade: alta"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Launcher2 (Android 3.0)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Interface com a icônica doca do Gingerbread, com sistema de grid completamente livre.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/launcher2_honeycomb.png" alt="Screenshot do Launcher2 Honeycomb" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p class="mb-0.5">• Bugs de interface corrigidos, incluindo scroll e funções básicas de rolagem.</p>
+                        <p>• Sistema de widgets, apps e atalho funcional adicionado, mantendo a interface holográfica original intacta.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">89c1ac444d6787ace91dd8a2f4d5a0112c1dd2e2fe80e569b41ddcc784442397</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Launcher_2/Launcher2.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg w-full text-center">Download</a>
                     </div>
                 </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">29c7898b49e6defa8229b64dfd0a4af2a8a20d2c08f151e673b0daa805ee1c07</span>
+
+                <!-- Music Player Honeycomb -->
+                <div class="pkg-card gen-legacy rounded-2xl p-6 boot-in" style="animation-delay:60ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-legacy mono">API 11 · Honeycomb</span>
+                        <span class="diff-bars diff-2" title="Dificuldade: moderada"><span></span><span></span><span></span><span></span></span>
                     </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Key/LatinIME_AOSP14.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
+                    <h3 class="text-lg font-bold text-white">Honeycomb Music Player</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">Reprodutor musical clássico, com o design nostálgico da era Android 3.0 mantido intacto.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/music_player_honeycomb.png" alt="Screenshot do Honeycomb Music Player" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p class="mb-0.5">• Corrigida a forma como o app lê as colunas de áudio, eliminando fechamentos forçados, mantendo a API 11 original para compatibilidade.</p>
+                        <p class="mb-0.5">• Aceleração de hardware adicionada para scroll suave.</p>
+                        <p>• Serviço de foreground adicionado no manifest e no Smali em <span class="text-white">MediaPlaybackService</span>, evitando que o app seja morto com a tela bloqueada.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">fca2fc86d30bb5129826a3bab2a39c9f6904a103a73faef092a88ad01670dc00</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Music_3.0/Music.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg w-full text-center">Download</a>
                     </div>
                 </div>
+
             </div>
+        </section>
 
-            <!-- CARD 6: LATINIME (AOSP 17) -->
-            <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                        <div>
-                            <span class="text-xs font-mono px-2.5 py-1 bg-[#e2f7ed] text-[#15803d] rounded-full font-medium">IME • Keyboard • Experimental</span>
-                            <h3 class="text-2xl font-bold tracking-tight text-[#0f172a] mt-2">Teclado Android LatinIME (AOSP 17)</h3>
-                            <p class="text-sm text-gray-500 mt-1">Port de última geração do teclado nativo direto do ecossistema CinnamonBun.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
-                        <img src="assets/latinime_aosp17.png" alt="Screenshot do LatinIME AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-4 my-4 font-mono text-xs text-gray-600 border border-gray-100">
-                        <p class="text-[#16a34a] font-bold mb-1">Modificações Realizadas:</p>
-                        <p class="mb-0.5">• Adaptados dicionários de sistema atualizados e libs de compilação da árvore do Android 17.</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div class="font-mono text-xs text-gray-400 w-full max-w-xl">
-                        <span class="text-gray-500 font-medium">INTEGRIDADE SHA-256:</span>
-                        <span class="block text-gray-600 mt-0.5 select-all bg-gray-100 px-2 py-1 rounded break-all">0290b26120a8f74ed03403ef9f72c0868b1187dfe2846e9ccdfd56fd36c15917</span>
-                    </div>
-                    <div class="flex gap-3 shrink-0 items-end">
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods" target="_blank" class="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl transition-colors font-mono shadow-xs">Código</a>
-                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/AOSP_Key/LatinIME_AOSP17.apk" class="px-5 py-2.5 bg-[#1e293b] hover:bg-[#0f172a] text-white text-sm font-bold rounded-xl transition-all font-mono shadow-sm">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SEÇÃO LEGAL: LICENÇA APACHE 2.0 -->
-            <div class="mt-12 p-6 border border-gray-300 rounded-3xl bg-[#f1f5f9] shadow-sm mb-12">
+        <!-- SEÇÃO VERIFICADOS: ancora real da 4ª legenda -->
+        <section id="verificados" class="scroll-mt-8 mb-12">
+            <div class="pkg-card rounded-2xl p-6 sm:p-7 border-l-[3px]" style="border-left-color:#3ddc84">
                 <div class="flex items-center gap-2 mb-3">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                    <h3 class="font-bold text-gray-700 tracking-wide text-lg">Licença e Distribuição</h3>
+                    <div class="w-2 h-2 rounded-full bg-[#3ddc84]"></div>
+                    <h2 class="section-label mono font-bold text-[#3ddc84] uppercase">Verificação de Integridade</h2>
                 </div>
-                <p class="text-sm text-gray-600 leading-relaxed font-mono">
-                    Todos os pacotes distribuídos nesta página operam sob a licença de software livre <strong>Apache License, Versão 2.0</strong>. Você pode obter uma cópia da licença em <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" class="text-blue-600 hover:underline">http://www.apache.org/licenses/LICENSE-2.0</a>. 
-                    <br><br>
-                    Os binários fornecidos são modificações diretas de código-fonte aberto baseadas na infraestrutura do Android Open Source Project. Distribuídos "NO ESTADO EM QUE SE ENCONTRAM", SEM GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO.
+                <p class="text-sm text-[#b8c2d6] leading-relaxed">
+                    Todos os 10 pacotes acima publicam seu hash SHA-256 junto ao binário. Antes de instalar, gere o hash do arquivo baixado e compare com o valor listado no card correspondente — isso confirma que o APK não foi alterado após a publicação.
                 </p>
+                <div class="mono text-xs bg-[#0a0e14] border border-[#26304a] rounded-lg p-3 mt-4 text-[#8b98b0]">
+                    $ sha256sum nome_do_arquivo.apk
+                </div>
             </div>
+        </section>
 
+        <!-- LICENÇA -->
+        <div class="pkg-card rounded-2xl p-6 border-l-[3px] border-l-[#26304a] mb-12">
+            <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-[#6b7889]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h3 class="font-bold text-[#b8c2d6] text-sm mono">Licença e Distribuição</h3>
+            </div>
+            <p class="text-xs text-[#8b98b0] leading-relaxed mono">
+                Todos os pacotes distribuídos nesta página operam sob a <strong class="text-[#b8c2d6]">Apache License, Versão 2.0</strong>. Cópia da licença em <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" class="text-[#58a6ff] hover:underline">apache.org/licenses/LICENSE-2.0</a>.
+                <br><br>
+                Binários fornecidos são modificações diretas de código-fonte aberto baseadas na infraestrutura AOSP. Distribuídos "no estado em que se encontram", sem garantias ou condições de qualquer tipo.
+            </p>
         </div>
+
     </main>
 
-    <!-- FOOTER EXIGIDO -->
     <footer class="w-full text-center py-8 mt-auto">
-        <p class="text-sm text-gray-400 font-mono tracking-widest lowercase">a experiência pura diferenciada do android para o usuário.</p>
+        <p class="text-xs text-[#6b7889] mono tracking-widest lowercase">a experiência pura diferenciada do android para o usuário.</p>
     </footer>
 
 </body>
