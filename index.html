@@ -7,7 +7,7 @@
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Efeito de brilho holográfico animado para os elementos CinnamonBun */
+        /* Efeito de brilho holográfico animado para os elementos CinnamonBun padrão */
         .holo-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
@@ -34,6 +34,37 @@
         }
 
         .holo-card:hover::before {
+            background-position: 0% 100%;
+        }
+
+        /* NOVO: Efeito Holográfico Escuro (Tron Style) para Android 3.0 Honeycomb */
+        .holo-honeycomb-card {
+            background: rgba(15, 23, 42, 0.90);
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #1e293b;
+        }
+        
+        .holo-honeycomb-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg, transparent 30%, rgba(56, 189, 248, 0.15) 40%, rgba(14, 165, 233, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            background-position: 200% 0%;
+            transition: background-position 0.6s ease;
+            pointer-events: none;
+        }
+
+        .holo-honeycomb-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .holo-honeycomb-card:hover::before {
             background-position: 0% 100%;
         }
 
@@ -140,6 +171,70 @@
         
         <div class="grid grid-cols-1 gap-6">
 
+            <!-- NOVO CARD: LAUNCHER2 ANDROID 3.0 (Tema Tron/Escuro) -->
+            <div class="holo-honeycomb-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-sky-900/50 text-sky-300 border border-sky-700 rounded-full font-medium shadow-inner">System UI • Honeycomb API 11</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#f8fafc] mt-3">Launcher2 (Android 3.0)</h3>
+                            <p class="text-sm text-[#cbd5e1] mt-2">A interface de celular portida com a icônica doca do Gingerbread, trazendo um sistema de grid completamente livre.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="my-4 overflow-hidden rounded-2xl border border-sky-900/50 bg-[#0f172a] flex justify-center items-center max-h-[320px]">
+                        <img src="assets/launcher2_honeycomb.png" alt="Screenshot do Launcher2 Honeycomb" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl p-4 my-4 font-mono text-xs text-slate-300 border border-slate-700">
+                        <p class="text-sky-400 font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Desbloqueio da matriz de grid, permitindo salvar ícones, widgets e imagens em absolutamente qualquer lugar da tela sem restrições de alinhamento.</p>
+                        <p class="mb-0.5">• Fusão da usabilidade de smartphone com a estética holográfica original de tablet.</p>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-slate-700">
+                    <div class="font-mono text-xs text-slate-400 w-full max-w-xl">
+                        <span class="text-slate-500 font-medium">INTEGRIDADE SHA-256:</span>
+                        <span class="block text-sky-300 mt-0.5 select-all bg-[#0f172a] px-2 py-1 rounded border border-slate-800 break-all">89c1ac444d6787ace91dd8a2f4d5a0112c1dd2e2fe80e569b41ddcc784442397</span>
+                    </div>
+                    <div class="flex gap-3 shrink-0 items-end">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Launcher_2/Launcher2.apk" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-900 text-sm font-bold rounded-xl transition-all font-mono shadow-[0_0_15px_rgba(14,165,233,0.4)]">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVO CARD: MUSIC PLAYER ANDROID 3.0 (Tema Tron/Escuro) -->
+            <div class="holo-honeycomb-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-cyan-900/50 text-cyan-300 border border-cyan-700 rounded-full font-medium shadow-inner">Media App • Honeycomb API 11</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-[#f8fafc] mt-3">Honeycomb Music Player</h3>
+                            <p class="text-sm text-[#cbd5e1] mt-2">O clássico reprodutor musical com o design nostálgico mantido intacto da era do Android 3.0.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="my-4 overflow-hidden rounded-2xl border border-cyan-900/50 bg-[#0f172a] flex justify-center items-center max-h-[320px]">
+                        <img src="assets/music_player_honeycomb.png" alt="Screenshot do Honeycomb Music Player" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl p-4 my-4 font-mono text-xs text-slate-300 border border-slate-700">
+                        <p class="text-cyan-400 font-bold mb-1">Modificações Realizadas:</p>
+                        <p class="mb-0.5">• Habilitação forçada de aceleração de hardware nativa para fluidez em rolagem de listas longas.</p>
+                        <p class="mb-0.5">• Preservação rigorosa dos recursos visuais e animações da API 11.</p>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-slate-700">
+                    <div class="font-mono text-xs text-slate-400 w-full max-w-xl">
+                        <span class="text-slate-500 font-medium">INTEGRIDADE SHA-256:</span>
+                        <span class="block text-cyan-300 mt-0.5 select-all bg-[#0f172a] px-2 py-1 rounded border border-slate-800 break-all">fca2fc86d30bb5129826a3bab2a39c9f6904a103a73faef092a88ad01670dc00</span>
+                    </div>
+                    <div class="flex gap-3 shrink-0 items-end">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Music_3.0/Music.apk" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-bold rounded-xl transition-all font-mono shadow-[0_0_15px_rgba(6,182,212,0.4)]">Download</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- CARD 7: MUSIC PLAYER ANDROID 1.0 -->
             <div class="holo-card border border-gray-200 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
                 <div>
@@ -151,7 +246,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/music_player.png" alt="Screenshot do Android 1.0 Music Player" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -185,7 +279,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/webview_shell.png" alt="Screenshot do WebviewShell Browser" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -219,7 +312,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/launcher3_aosp17.png" alt="Screenshot do Launcher3 AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -253,7 +345,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/launcher3_aosp14.png" alt="Screenshot do Launcher3 AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -286,7 +377,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/documentsui.png" alt="Screenshot do DocumentsUI" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -319,7 +409,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/gallery2.png" alt="Screenshot da Galeria 3D Gallery2" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -352,7 +441,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/latinime_aosp14.png" alt="Screenshot do LatinIME AOSP 14" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
@@ -385,7 +473,6 @@
                         </div>
                     </div>
                     
-                    <!-- Espaço para Imagem Adicionado -->
                     <div class="my-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 flex justify-center items-center max-h-[320px]">
                         <img src="assets/latinime_aosp17.png" alt="Screenshot do LatinIME AOSP 17" class="w-full h-full object-contain max-h-[320px] hover:scale-102 transition-transform duration-300">
                     </div>
