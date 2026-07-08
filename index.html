@@ -194,7 +194,7 @@
             <p class="text-[#6b7889]">$ adb shell getprop ro.build.fingerprint</p>
             <p class="text-[#3ddc84]">aosp/cinnamonbun/generic:17/CB37/eng.saulo:userdebug</p>
             <p class="text-[#6b7889] mt-2">$ status --repositório</p>
-            <p class="text-[#e2e8f0]">10 pacotes <span class="text-[#3ddc84]">compilados</span> · 2 gerações de API · verificação SHA-256 ativa<span class="cursor-blink"></span></p>
+            <p class="text-[#e2e8f0]">12 pacotes <span class="text-[#3ddc84]">compilados</span> · 2 gerações de API · verificação SHA-256 ativa<span class="cursor-blink"></span></p>
         </div>
 
         <!-- LEGENDAS FUNCIONAIS: âncoras reais para as seções abaixo -->
@@ -532,6 +532,73 @@
                 </div>
 
             </div>
+
+            <!-- Sub-bloco: variante Motorola Xoom, build fingerprint específico -->
+            <div class="flex items-center gap-3 mb-2 pt-10">
+                <div class="w-2 h-2 rounded-full bg-[#f0883e]"></div>
+                <h3 class="section-label mono font-bold text-[#f0883e] uppercase">Variante Motorola Xoom — Build 3.0.1-1302318822</h3>
+            </div>
+            <p class="text-sm text-[#8b98b0] mb-4 max-w-2xl">
+                Internamente, o Honeycomb carrega o DNA do Gingerbread com uma camada de interface otimizada só para tablets. Em qualquer outro dispositivo, o sistema tentaria renderizar o layout de celular legado.
+            </p>
+            <div class="bg-[#0a0e14] border border-[#26304a] rounded-xl p-4 mono text-xs leading-relaxed mb-6 max-w-2xl">
+                <p class="text-[#6b7889]">$ adb shell getprop ro.build.fingerprint</p>
+                <p class="text-[#f0883e]">xoom/mz601/wingray:3.0.1/HRI66/1302318822:user/release-keys</p>
+                <p class="text-[#6b7889] mt-2">$ patch --método</p>
+                <p class="text-[#e2e8f0]">Forçado <code class="text-white">isScreenXLarge()</code> a retornar <span class="text-[#3ddc84]">true</span> fixo via Smali — engana o framework para ignorar a DPI real e renderizar sempre o layout de tablet.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Launcher2 Xoom -->
+                <div class="pkg-card gen-legacy rounded-2xl p-6 boot-in" style="animation-delay:120ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-legacy mono">3.0.1-1302318822</span>
+                        <span class="diff-bars diff-4" title="Dificuldade: muito alta"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Launcher2 (Motorola Xoom Port)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">O launcher original do Xoom, deodexado e forçado a rodar em modo tablet em qualquer dispositivo.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/launcher2_xoom.png" alt="Screenshot do Launcher2 Motorola Xoom" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p class="mb-0.5">• Layouts <code class="text-white">xlarge</code> replicados nas pastas de recurso padrão, já que <em>resources.arsc</em> só carrega o bucket correto se a DPI reportada bater.</p>
+                        <p>• Método <code class="text-white">isScreenXLarge()</code> patchado via Smali para retorno fixo <code class="text-white">true</code>, forçando modo tablet independentemente do hardware real.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">f743fac5eb4bd76dc6b00b1ea41c5287e20c97ae94492a736376eea40bf2421e</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/Launche2_Tablet_Layout/Launcher2_Motorola_Xoom_Port.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg w-full text-center">Download</a>
+                    </div>
+                </div>
+
+                <!-- LatinIME Xoom -->
+                <div class="pkg-card gen-legacy rounded-2xl p-6 boot-in" style="animation-delay:180ms">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="build-tag tag-legacy mono">3.0.1-1302318822</span>
+                        <span class="diff-bars diff-3" title="Dificuldade: alta"><span></span><span></span><span></span><span></span></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">LatinIME (Motorola Xoom Port)</h3>
+                    <p class="text-xs text-[#8b98b0] mt-1 mb-3">O teclado nativo do Xoom, deodexado e restaurado para operar em telas de qualquer densidade.</p>
+                    <div class="preview-frame overflow-hidden rounded-xl flex justify-center items-center max-h-[220px] mb-3">
+                        <img src="assets/latinime_xoom.png" alt="Screenshot do LatinIME Motorola Xoom" class="w-full h-full object-contain max-h-[220px]">
+                    </div>
+                    <div class="bg-[#1c2333] rounded-lg p-3 mb-3 mono text-xs text-[#b8c2d6] border border-[#26304a]">
+                        <p class="text-[#3ddc84] font-bold mb-1">Modificações:</p>
+                        <p class="mb-0.5">• Reestruturação completa da pasta <code class="text-white">res/</code> para forçar o layout de tablet original em qualquer DPI.</p>
+                        <p>• Binário deodexado do zero e validado por hash SHA-256.</p>
+                    </div>
+                    <div class="mono mb-3">
+                        <span class="sha-box block select-all text-[10px]">ca7eb6a60d96ce2058fc2c5fdc376eddd5a2853c7a1d802fce1c40a7043b0112</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Saulo5810p/AOSP-Android-Apps-Ports-and-Mods/releases/download/LatinIME_Honeycomb/LatinIME_Android_3.0.apk" class="btn-download mono px-3 py-2 text-xs rounded-lg w-full text-center">Download</a>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <!-- SEÇÃO VERIFICADOS: ancora real da 4ª legenda -->
@@ -542,7 +609,7 @@
                     <h2 class="section-label mono font-bold text-[#3ddc84] uppercase">Verificação de Integridade</h2>
                 </div>
                 <p class="text-sm text-[#b8c2d6] leading-relaxed">
-                    Todos os 10 pacotes acima publicam seu hash SHA-256 junto ao binário. Antes de instalar, gere o hash do arquivo baixado e compare com o valor listado no card correspondente — isso confirma que o APK não foi alterado após a publicação.
+                    Todos os 12 pacotes acima publicam seu hash SHA-256 junto ao binário. Antes de instalar, gere o hash do arquivo baixado e compare com o valor listado no card correspondente — isso confirma que o APK não foi alterado após a publicação.
                 </p>
                 <div class="mono text-xs bg-[#0a0e14] border border-[#26304a] rounded-lg p-3 mt-4 text-[#8b98b0]">
                     $ sha256sum nome_do_arquivo.apk
@@ -573,3 +640,4 @@
 
 </body>
 </html>
+
